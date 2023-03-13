@@ -4,16 +4,9 @@ import { Link } from "react-router-dom";
 export const Navbar = () => {
 	//<a href="./demo.html">
 	return (
-		<nav className="navbar navbar-light bg-light">
+		<nav className="navbar navbar-secondary bg-secondary">
 			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
+			<h1 className="title">Contacts</h1>
 			</div>
 		</nav>
 	);

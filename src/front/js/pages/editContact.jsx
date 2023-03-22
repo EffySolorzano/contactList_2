@@ -67,7 +67,7 @@ const EditContact = (props) => {
       </Link>
       <div className="container mt-4 bg-light p-3">
         <div className="d-flex align-items-center">
-          <h1>Edit Contact: {isLoaded && contacto.full_name}</h1>
+          <h3>Edit Contact: {isLoaded && contacto.full_name}</h3>
         </div>
         <form className="row g-3">
           <div className="col-md-6">
@@ -98,7 +98,7 @@ const EditContact = (props) => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="col-12">
+          <div className="col-8">
             <label htmlFor="address" className="form-label">
               Address:
             </label>
@@ -126,17 +126,17 @@ const EditContact = (props) => {
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
-          <div className="col-md-4" id="btn-container">
-            <div className="d-flex justify-content-between w-100">
+          <div className="col-md-2" id="btn-container">
+            <div className="d-flex w-100">
               <button
                 type="button"
-                className="col md-2 align-items-end justify-content-center btn btn-success w-10 mt-4"
+                className="col md-2 btn btn-success  mt-4"
                 onClick={handleSubmit}
               >
                 Save
               </button>
               <Link to="/">
-                <button type="button" className="btn btn-danger">
+                <button type="button" className="btn btn-danger" id="button">
                   Cancel
                 </button>
               </Link>

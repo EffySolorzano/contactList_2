@@ -4,95 +4,73 @@ import { Link } from "react-router-dom";
 
 const AddContact = () => {
   const { store, actions } = useContext(Context);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [data, setData] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    actions.addContact({
-      full_name: fullName,
-      email: email,
-      phone: phone,
-      address: address,
-    });
+  let newContact = {
+    full_name: "Steph La Cheffe",
+    email: "solorzano.steph@gmail.com",
+    phone: "+1 (786) 830-7059",
+    agenda_slug: "newSteph",
+    address: "5930 SW 10th St, West Miami 33144. FL, USA",
   };
 
-  useEffect(() => {}, [fullName, phone, email]);
+  useEffect(() => {}, [data.full_name, data.phone, data.adress, data.email]);
 
   return (
-    <div>
-      <br />
-      <Link to="/" className="btn btn-secondary" id="back">Go back to the contact list</Link>
-      <br />
-      <div className="container">
-        <form onSubmit={handleSubmit} className="my-5">
-          <h2 className="mb-3 title">Add Contact</h2>
-          <div className="form-group form">
-            <label>Full Name:</label>
-            <input
-              type="text"
-              className="form-control"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              className="form-control"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone:</label>
-            <input
-              type="tel"
-              className="form-control"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label>Address:</label>
-            <input
-              type="text"
-              className="form-control"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary">
-            Agregar Contacto a la Agenda
-          </button>
-        </form>
-
-        <br />
-        <button className="btn btn-warning"
-          onClick={async () => {
-            let { respuestaJson, response } = await actions.useFetch(
-              "/apis/fake/contact/",
-              {
-                full_name: fullName,
-                email: email,
-                agenda_slug: "agenda_de_antonio",
-                address: "47568 NW 34ST, 33434 FL, USA",
-                phone: phone,
-              },
-              "POST"
-            );
-            if (!response.ok) {
-              alert("No se registró el contacto");
-              return;
-            }
-            console.log("Contacto creado: \n", respuestaJson);
+    <div className="card mx-auto mt-5" style={{ width: "25rem" }}>
+      <div className="card-body">
+        <h5 className="card-title text-center">New Contact</h5>
+        <Link className="btn btn-warning mb-3" to="/">
+          Go back to contact list
+        </Link>
+        <div className="form-floating mb-3">
+          <input
+            className="form-control"
+            placeholder="Name"
+            onChange={(e) => {
+              setData({ ...data, full_name: e.target.value });
+            }}
+          />
+          <label htmlFor="floatingInput">Name</label>
+        </div>
+        <div className="form-floating mb-3">
+          <input
+            className="form-control"
+            placeholder="Phone Number"
+            onChange={(e) => {
+              setData({ ...data, phone: e.target.value });
+            }}
+          />
+          <label htmlFor="floatingInput">Phone Number</label>
+        </div>
+        <div className="form-floating mb-3">
+          <input
+            className="form-control"
+            placeholder="Address"
+            onChange={(e) => {
+              setData({ ...data, address: e.target.value });
+            }}
+          />
+          <label htmlFor="floatingInput">Address</label>
+        </div>
+        <div className="form-floating mb-3">
+          <input
+            className="form-control"
+            placeholder="Email"
+            onChange={(e) => {
+              setData({ ...data, email: e.target.value });
+            }}
+          />
+          <label htmlFor="floatingInput">Email</label>
+        </div>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {
+            actions.addContact(data);
           }}
         >
-          Fecth button
+          Add contact
         </button>
       </div>
     </div>

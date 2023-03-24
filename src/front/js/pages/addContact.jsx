@@ -1,78 +1,117 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 const AddContact = () => {
   const { store, actions } = useContext(Context);
-  const [data, setData] = useState({});
 
-  let newContact = {
-    full_name: "Steph La Cheffe",
-    email: "solorzano.steph@gmail.com",
-    phone: "+1 (786) 830-7059",
-    agenda_slug: "newSteph",
-    address: "5930 SW 10th St, West Miami 33144. FL, USA",
+  const handleAddContact = async () => {
+    const full_name = document.getElementById("full-name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const address = document.getElementById("address").value;
+
+    const newContact = {
+      full_name,
+      email,
+      phone,
+      address,
+      agenda_slug: "issaNahil_ContactList",
+    };
+    const { respuestaJson, response } = await actions.useFetch(
+      "/apis/fake/contact/",
+      newContact,
+      "POST"
+    );
+    if (!response.ok) {
+      console.log(response);
+      alert(
+        "There was an error, please carefully review the information and try again"
+      );
+      return;
+    }
+
+    alert("You have added a new contact to the list");
+
+    document.getElementById("full-name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("address").value = "";
   };
 
-  useEffect(() => {}, [data.full_name, data.phone, data.adress, data.email]);
-
   return (
-    <div className="card mx-auto mt-5" style={{ width: "25rem" }}>
-      <div className="card-body">
-        <h5 className="card-title text-center">New Contact</h5>
-        <Link className="btn btn-warning mb-3" to="/">
-          Go back to contact list
+    <div className="container mt-5 bg-light p-5">
+      <div className="align-items-center">
+        <Link to="/">
+          <button type="button" className="btn btn-warning button1">
+            Go Back to contact list
+          </button>
         </Link>
-        <div className="form-floating mb-3">
-          <input
-            className="form-control"
-            placeholder="Name"
-            onChange={(e) => {
-              setData({ ...data, full_name: e.target.value });
-            }}
-          />
-          <label htmlFor="floatingInput">Name</label>
-        </div>
-        <div className="form-floating mb-3">
-          <input
-            className="form-control"
-            placeholder="Phone Number"
-            onChange={(e) => {
-              setData({ ...data, phone: e.target.value });
-            }}
-          />
-          <label htmlFor="floatingInput">Phone Number</label>
-        </div>
-        <div className="form-floating mb-3">
-          <input
-            className="form-control"
-            placeholder="Address"
-            onChange={(e) => {
-              setData({ ...data, address: e.target.value });
-            }}
-          />
-          <label htmlFor="floatingInput">Address</label>
-        </div>
-        <div className="form-floating mb-3">
-          <input
-            className="form-control"
-            placeholder="Email"
-            onChange={(e) => {
-              setData({ ...data, email: e.target.value });
-            }}
-          />
-          <label htmlFor="floatingInput">Email</label>
-        </div>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => {
-            actions.addContact(data);
-          }}
-        >
-          Add contact
-        </button>
+        <br />
+        <br />
+
+        <h5 className="text-center">Add Contact</h5>
       </div>
+      <br />
+      <form className="row g-3">
+        <div className="col-md-6">
+          <label htmlFor="full-name" className="form-label">
+            Full Name:
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="full-name"
+            name="full-name"
+            placeholder="Enter full name"
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="email" className="form-label">
+            Email:
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter email"
+          />
+        </div>
+        <div className="col-6">
+          <label htmlFor="address" className="form-label">
+            Address:
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="address"
+            name="address"
+            placeholder="Enter address"
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="phone" className="form-label">
+            Phone:
+          </label>
+          <input
+            type="tel"
+            className="form-control"
+            id="phone"
+            name="phone"
+            placeholder="Enter phone number"
+          />
+        </div>
+        <div className="col-md-4 d-flex align-items-start">
+          <button
+            type="button"
+            className="btn btn-primary button2"
+            onClick={handleAddContact}
+          >
+            Add Contact
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

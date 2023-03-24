@@ -19,3 +19,16 @@
 #button {
   margin-right: -100px;
 }
+.container {
+  width: 500px;
+}
+.button1 {
+  margin-top: -20px;
+}
+.button2 {
+  margin-top: 20px;
+}
+.title {
+  text-align: center;
+  margin-left: 150px;
+}
